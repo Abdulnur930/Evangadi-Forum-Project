@@ -21,7 +21,7 @@ async function register(req, res) {
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "user already existed" });
     }
-    console.log("password", password.length);
+    // console.log("password", password.length);
     if (password.length < 8) {
       return res
         .status(StatusCodes.BAD_REQUEST)
