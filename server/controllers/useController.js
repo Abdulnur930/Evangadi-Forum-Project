@@ -23,7 +23,7 @@ async function register(req, res) {
     }
     // console.log("password", password.length);
     if (password.length < 8) {
-      return res
+      return resxxxa
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "password must be at least 8 characters" });
     }
