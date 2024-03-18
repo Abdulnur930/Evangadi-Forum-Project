@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import axios from "../Utility/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const usernameDom = useRef();
@@ -25,7 +26,7 @@ const Register = () => {
       alert("Please provide all required information");
       return;
     }
-    console.log(usernameValue, firstValue, lastValue, emailValue, passValue);
+    // console.log(usernameValue, firstValue, lastValue, emailValue, passValue);
     try {
       await axios.post("/users/register", {
         username: usernameValue,
@@ -35,7 +36,7 @@ const Register = () => {
         password: passValue,
       });
       alert("register successfull. please login");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       alert(error?.response?.data?.msg);
       console.log(error.response.data);
@@ -74,7 +75,8 @@ const Register = () => {
         </div>
         <br />
         <button type="submit">Register</button>
-      </form>
+      </form>{" "}
+      <Link to={"/login"}>login</Link>
     </section>
   );
 };

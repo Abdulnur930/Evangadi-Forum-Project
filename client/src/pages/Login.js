@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import axios from "../Utility/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const emailDom = useRef();
@@ -14,12 +14,15 @@ const Login = () => {
       return;
     }
     try {
-      await axios.post("/users/login", {
+      const {data} = await axios.post("/users/login", {
         email: emailValue,
         password: passValue,
       });
       alert("login successfull.");
+      localStorage.setItem('token',data.token)
+      // console.log(data)
       navigate("/");
+      
     } catch (error) {
       alert(error?.response?.data?.msg);
       console.log(error.response.data);
@@ -41,6 +44,7 @@ const Login = () => {
         <br />
         <button type="submit">Login</button>
       </form>
+      <Link to={"/register"}>register</Link>
     </section>
   );
 };
