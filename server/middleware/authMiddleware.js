@@ -11,10 +11,14 @@ async function authMiddleware(req, res, next) {
   // console.log(authHeader);
   // console.log("to",token);
   try {
-    const { username, userid } = jwt.verify(token, process.env.JWT_SECRET);
+    const { username, userid, firstname } = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
     req.user = {
       username,
       userid,
+      firstname,
     };
     next();
   } catch (error) {

@@ -23,7 +23,7 @@ async function register(req, res) {
     }
     // console.log("password", password.length);
     if (password.length < 8) {
-      return resxxxa
+      return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "password must be at least 8 characters" });
     }
@@ -55,7 +55,7 @@ async function login(req, res) {
 
   try {
     const [user] = await dbConnection.query(
-      "select username, userid, password from users where email=?",
+      "select username, userid,firstname, password from users where email=?",
       [email]
     );
     if (user.length == 0) {
@@ -75,10 +75,13 @@ async function login(req, res) {
     }
     const username = user[0].username;
     const userid = user[0].userid;
-    const token = jwt.sign({ username, userid }, process.env.JWT_SECRET,{ expiresIn: "1d" });
+    const firstname = user[0].firstname;
+    const token = jwt.sign({ username, userid,firstname }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "user login successful", token });
+      .json({ msg: "user login successful", token, username,firstname });
   } catch (error) {
     console.log(error.message);
 
@@ -88,8 +91,7 @@ async function login(req, res) {
   }
 }
 async function checkUser(req, res) {
-  const { username, userid } = req.user;
-
-  res.status(StatusCodes.OK).json({ msg: "valid user", username, userid });
+  const { username, userid,firstname } = req.user;
+  res.status(StatusCodes.OK).json({ msg: "valid user", username, userid,firstname });
 }
 module.exports = { login, checkUser, register };

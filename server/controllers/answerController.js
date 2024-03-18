@@ -3,18 +3,20 @@ const { StatusCodes } = require("http-status-codes");
 // add answers to the database
 const addAnswer = async (req, res) => {
   const { questionid, userid, answer } = req.body;
- if (!answer) {
-   return res
-     .status(StatusCodes.BAD_REQUEST)
-     .json({ msg: "please fill the answer field" });
- }
+  if (!answer) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "please fill the answer field" });
+  }
   try {
     await dbConnection.query(
       `INSERT INTO answers (questionid, userid, answer) VALUES (?, ?, ?) `,
       [questionid, userid, answer]
     );
 
-    return res.status(StatusCodes.CREATED).json({ msg: "answer added successfully" });
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ msg: "answer added successfully" });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -33,7 +35,9 @@ async function answers(req, res) {
     if (answers.length > 0) {
       return res.status(StatusCodes.OK).json({ answers });
     } else {
-      return res.status(StatusCodes.NOT_FOUND).json({ msg: "no answers found" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "no answers found" });
     }
   } catch (error) {
     console.log(error);

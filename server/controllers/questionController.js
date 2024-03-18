@@ -4,9 +4,8 @@ const dbConnection = require("../db/dbConfig");
 
 const askQuestion = async (req, res) => {
   req.body.questionid = uuidv4();
-  res;
   const { questionid, userid, title, description, tag } = req.body;
-
+  // const userid = req.user.userid;
   //check if title and description are not empty
   if (!title || !description) {
     return res
@@ -32,10 +31,10 @@ const askQuestion = async (req, res) => {
 //get all the questions
 const getAllQuestions = async (req, res) => {
   try {
-    const [questionid] = await dbConnection.query(
-      "SELECT questions.*, users.username FROM questions JOIN users ON questions.userid = users.userid ORDER BY id DESC"
+    const [questions] = await dbConnection.query(
+      "SELECT questions.*, users.username FROM questions JOIN users ON questions.userid = users.userid ORDER BY questions.id DESC"
     );
-    return res.status(StatusCodes.OK).json(questionid);
+    return res.status(StatusCodes.OK).json(questions);
   } catch (error) {
     console.log(error.message);
     return res
@@ -46,7 +45,7 @@ const getAllQuestions = async (req, res) => {
 
 const getSingleQuestion = async (req, res) => {
   // Extract the questionid from the request parameters
-//   console.log(req.params);
+  //   console.log(req.params);
   const questionid = req.params.questionid;
   try {
     const [question] = await dbConnection.query(
@@ -67,4 +66,4 @@ const getSingleQuestion = async (req, res) => {
   }
 };
 
-module.exports = { askQuestion, getAllQuestions,getSingleQuestion };
+module.exports = { askQuestion, getAllQuestions, getSingleQuestion };
