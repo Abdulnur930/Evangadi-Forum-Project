@@ -5,7 +5,7 @@ import { AppState } from "../App";
 const AskQuestion = () => {
   const { user } = useContext(AppState);
   const token = localStorage.getItem("token");
-  console.log(token)
+  // console.log(token)
   const navigate = useNavigate();
   const titleDom = useRef();
   const descriptionDom = useRef();
