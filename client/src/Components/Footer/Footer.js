@@ -43,10 +43,10 @@ const Footer = () => {
             <p>+1-202-386-2702</p>
           </div>
         </div>
+        <div className="footer-wrapper text-center">
+          <h2>Developed by Abdulnur</h2>
+        </div>
       </footer>
-      {/* <div className="footer-wrapper footer-copyright">
-        <h2>Developed by Abdulnur</h2>
-      </div> */}
     </div>
   );
 };
