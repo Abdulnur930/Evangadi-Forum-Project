@@ -1,0 +1,44 @@
+.answer-wrapper {
+  min-height: 490px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 10px #e8e8e8, -5px -5px 10px #ffffff;
+}
+
+.answer-field {
+  height: 200px;
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  border: silver 1px solid;
+}
+
+.answer-field {
+  max-height: 300px;
+  min-height: 150px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-color: #c0c0c0;
+}
+
+.answer-field:focus {
+  outline: none;
+}
+
+.answer-btn {
+  max-width: 200px;
+  height: 41px;
+  background-color: #516cf0;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.answer-btn:hover {
+  background-color: #ff8500;
+}
+
+.answer-btn:active {
+  background-color: #516cf0;
+}

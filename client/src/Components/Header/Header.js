@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../../assets/images/evangadi-logo-black.png";
 import { AppState } from "../../App";
 import "./header.css";
@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { user, setUser } = useContext(AppState);
-  console.log(user.user);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const handleSignin = (e) => {
@@ -21,14 +20,12 @@ const Header = () => {
     navigate("/login");
   };
 
-  function drop() {
-    var x = document.getElementById("my-links");
-    if (x.classList.contains("show")) {
-      x.classList.remove("show");
-    } else {
-      x.classList.add("show");
-    }
-  }
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  console.log(isDropdownOpen);
   return (
     <>
       <div className="header container-fluid">
@@ -42,7 +39,10 @@ const Header = () => {
               <img src={Logo} alt="Evangadi logo" />
             </Link>
           )}
-          <button onClick={drop} className="icon d-md-block d-lg-none">
+          <button
+            onClick={toggleDropdown}
+            className="icon d-md-block d-lg-none"
+          >
             ☰
           </button>
 
@@ -60,24 +60,29 @@ const Header = () => {
         </div>
       </div>
 
-      {/* <div className="d-block justify-content-between d-md-none" id="my-links">
-        <div className="d-md-none">
-          <Link to="/">Home</Link>
+      {isDropdownOpen && (
+        <div
+          className="d-block justify-content-between d-md-none"
+          id="my-links"
+        >
+          <Link className="drop_links  d-md-none" to="/">
+            Home
+          </Link>
+
+          <hr className="d-md-none" />
+          <Link className="drop_links  d-md-none" to="/">
+            How it works
+          </Link>
+          <hr className="d-md-none" />
+          {token ? (
+            <button onClick={handleSignin} className="header-btn">
+              LogOut
+            </button>
+          ) : (
+            <button className="header-btn">SIGN IN</button>
+          )}
         </div>
-        <hr className="d-md-none" />
-        <div className="d-md-none">
-          <Link to="/">How it works</Link>
-        </div>
-        <hr className="d-md-none" />
-       {token ? (
-              <button onClick={handleSignin} className="header-btn">
-                LogOut
-              </button>
-            ) : (
-              <button className="header-btn">SIGN IN</button>
-            )}
-        
-      </div> */}
+      )}
     </>
   );
 };

@@ -13,12 +13,11 @@ const Footer = () => {
           <div className="logo">
             <img src={logo} alt="" />
           </div>
-            <div className="footer_icons">
-              <FacebookOutlinedIcon />
-              <InstagramIcon />
-              <YouTubeIcon />
-            </div>
-           
+          <div className="footer_icons">
+            <FacebookOutlinedIcon className="footer_icons_e" />
+            <InstagramIcon className="footer_icons_e" />
+            <YouTubeIcon className="footer_icons_e" />
+          </div>
         </div>
 
         <div className="col-lg-4 col-md-4">
