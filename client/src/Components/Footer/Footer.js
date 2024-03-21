@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-wrapper text-center">
-          <h2>Developed by Abdulnur</h2>
+          {/* <h2>Developed by Abdulnur</h2> */}
         </div>
       </footer>
     </div>
