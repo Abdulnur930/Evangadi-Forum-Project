@@ -38,12 +38,12 @@
 }
 
 .question-link:hover {
-  margin-left: 20px;
+  /* margin-left: 20px; */
   background-color: #F2F2F2;
 }
-
+.question-link:hover .avatar{background-color: #012d66;}
 .question-link:hover .fa {
-  margin-left: 30px; /* Adjust as needed */
+  margin-left: 30px; 
 }
 
 .q-fs { 
