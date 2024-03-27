@@ -15,7 +15,7 @@ const AskQuestion = () => {
     e.preventDefault();
     const titleValue = titleDom.current.value;
     const descriptionValue = descriptionDom.current.value;
-    const tagValue = tagDom.current.value;
+    const tagValue = tagDom?.current?.value;
     if (!titleValue || !descriptionValue) {
       alert("Please provide all required information");
       return;
