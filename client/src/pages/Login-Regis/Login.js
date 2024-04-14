@@ -6,9 +6,12 @@ import { eye } from "react-icons-kit/feather/eye";
 import "./Login-Regis.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "../../Utility/axiosConfig";
+import { ClipLoader } from "react-spinners";
 const Login = () => {
   const [icon, setIcon] = useState(eyeOff);
   const [type, setType] = useState("password");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const emailDom = useRef();
   const passwordDom = useRef();
@@ -17,34 +20,36 @@ const Login = () => {
     const emailValue = emailDom.current.value;
     const passValue = passwordDom.current.value;
     if (!emailValue || !passValue) {
-      alert("Please provide all required information");
+      setError("please provide all required fields");
       return;
     }
     try {
+      setLoading(true);
       const { data } = await axios.post("/users/login", {
         email: emailValue,
         password: passValue,
       });
-      alert("login successfull.");
-       
+
       localStorage.setItem("token", data.token);
       // console.log(data)
+      setLoading(false);
       navigate("/");
       window.location.reload(false);
     } catch (error) {
-      alert(error?.response?.data?.msg);
+      setError(error?.response?.data?.msg);
       console.log(error.response.data);
+      setLoading(false);
     }
   }
-    const handleIcon = () => {
-      if (type === "password") {
-        setIcon(eye);
-        setType("text");
-      } else {
-        setIcon(eyeOff);
-        setType("password");
-      }
-    };
+  const handleIcon = () => {
+    if (type === "password") {
+      setIcon(eye);
+      setType("text");
+    } else {
+      setIcon(eyeOff);
+      setType("password");
+    }
+  };
   return (
     <div className="logSign_page container-fluid ">
       <div className="login-wrapper container py-5 d-md-flex justify-content-between ">
@@ -57,6 +62,9 @@ const Login = () => {
             </Link>
           </p>
           <form onSubmit={handleSubmit}>
+            {error && (
+              <small style={{ paddingTop: "5px", color: "red" }}>{error}</small>
+            )}
             <input
               className="input-field"
               name="email"
@@ -74,7 +82,16 @@ const Login = () => {
             <span className="" onClick={handleIcon}>
               <Icon className="field-icon" icon={icon} size={20} />
             </span>
-            <button className="logSign">Login</button>
+            <button className="logSign">
+              {loading ? (
+                <div className="loading">
+                  <ClipLoader color="gray" size={25} />
+                  <p className="wait">Please Wait ...</p>
+                </div>
+              ) : (
+                "Login"
+              )}
+            </button>
           </form>
           <Link to="/register" className="a3 text-center mt-3">
             Create an account?

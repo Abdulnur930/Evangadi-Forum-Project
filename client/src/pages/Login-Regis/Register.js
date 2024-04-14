@@ -4,11 +4,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
+import { ClipLoader } from "react-spinners";
 import "./Login-Regis.css";
 const Register = () => {
-   const [input, setInput] = useState({});
-   const [icon, setIcon] = useState(eyeOff);
-   const [type, setType] = useState("password");
+  const [input, setInput] = useState({});
+  const [icon, setIcon] = useState(eyeOff);
+  const [type, setType] = useState("password");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const usernameDom = useRef();
   const firstnameDom = useRef();
@@ -29,11 +32,12 @@ const Register = () => {
       !emailValue ||
       !passValue
     ) {
-      alert("Please provide all required information");
+      setError("please provide all required fields");
       return;
     }
     // console.log(usernameValue, firstValue, lastValue, emailValue, passValue);
     try {
+      setLoading(true);
       await axios.post("/users/register", {
         username: usernameValue,
         firstname: firstValue,
@@ -41,22 +45,24 @@ const Register = () => {
         email: emailValue,
         password: passValue,
       });
+      setLoading(false);
       alert("register successfull. please login");
       navigate("/login");
     } catch (error) {
-      alert(error?.response?.data?.msg);
+      setError(error?.response?.data?.msg);
       console.log(error.response.data);
+      setLoading(false);
     }
   }
-    const handleShowHide = () => {
-      if (type === "password") {
-        setIcon(eye);
-        setType("text");
-      } else {
-        setIcon(eyeOff);
-        setType("password");
-      }
-    };
+  const handleShowHide = () => {
+    if (type === "password") {
+      setIcon(eye);
+      setType("text");
+    } else {
+      setIcon(eyeOff);
+      setType("password");
+    }
+  };
   return (
     <>
       <div className=" container-fluid logSign_page">
@@ -71,6 +77,11 @@ const Register = () => {
             </p>
 
             <form onSubmit={handleSubmit}>
+              {error && (
+                <small style={{ paddingTop: "5px", color: "red" }}>
+                  {error}
+                </small>
+              )}
               <input
                 className="input-field mr-1"
                 type="text"
@@ -119,7 +130,16 @@ const Register = () => {
                 />
               </span>
 
-              <button className="logSign">Agree and Join</button>
+              <button className="logSign">
+                {loading ? (
+                  <div className="loading">
+                    <ClipLoader color="gray" size={25} />
+                    <p>Please Wait ...</p>
+                  </div>
+                ) : (
+                  "Agree and Join"
+                )}
+              </button>
             </form>
             <p className="text-center  mt-3 p_s">
               I agree to the
@@ -137,7 +157,7 @@ const Register = () => {
           </div>
           <div className="login-right-side  container  col-12 col-md-6 ms-md-2 mt-sm-5">
             <h4 className="forTitle">About</h4>
-            <h1 className="right_title" >Evangadi Networks Q & A</h1>
+            <h1 className="right_title">Evangadi Networks Q & A</h1>
             <p>
               No matter what stage of life you are in, whether you’re just
               starting elementary school or being promoted to CEO of a Fortune

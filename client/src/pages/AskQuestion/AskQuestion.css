@@ -41,7 +41,7 @@
 
 .ask-question-btn {
   max-width: 200px;
-  height: 41px;
+  height: 52px;
   background-color: #516cf0;
   color: white;
   border: 1px solid transparent;
@@ -66,5 +66,14 @@
 }
 .goto:hover {
   color: #fe8500;
-   text-decoration: underline;
+  text-decoration: underline;
+}
+.loading {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  color: rgb(52, 52, 52);
+}
+.loading p {
+  margin-top: 10px;
 }

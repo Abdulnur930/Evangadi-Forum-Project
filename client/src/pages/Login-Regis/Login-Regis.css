@@ -13,7 +13,7 @@
 }
 .a3:hover {
   text-decoration: underline;
-} 
+}
 .logSign {
   background-color: #516cf0;
   width: 100%;
@@ -69,7 +69,7 @@ form {
   /* font-size: 100%; */
   margin-right: 0px;
 }
-.p_s{
+.p_s {
   font-size: small;
 }
 .a22:hover {
@@ -130,4 +130,17 @@ right-btn:active {
   color: #2d385e;
   font-size: 50px;
   margin-bottom: 35px;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  color: rgb(52, 52, 52);
+}
+.wait {
+  margin-top: 10px;
 }

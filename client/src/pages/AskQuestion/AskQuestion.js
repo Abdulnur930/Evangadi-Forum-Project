@@ -2,12 +2,15 @@ import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../Utility/axiosConfig";
 import { AppState } from "../../App";
+import { ClipLoader } from "react-spinners";
 import "./AskQuestion.css";
 const AskQuestion = () => {
   const { user } = useContext(AppState);
   const token = localStorage.getItem("token");
   // console.log(token)
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const titleDom = useRef();
   const descriptionDom = useRef();
   const tagDom = useRef();
@@ -17,11 +20,13 @@ const AskQuestion = () => {
     const descriptionValue = descriptionDom.current.value;
     const tagValue = tagDom?.current?.value;
     if (!titleValue || !descriptionValue) {
-      alert("Please provide all required information");
+      setError("Please provide all required information");
+      // alert("Please provide all required information");
       return;
     }
     console.log(titleValue, descriptionValue, tagValue);
     try {
+      setLoading(true);
       await axios.post(
         `/questions/askquestion`,
         {
@@ -36,16 +41,18 @@ const AskQuestion = () => {
           },
         }
       );
-      alert("question added successful.");
+      // alert("question added successful.");
+      setLoading(false);
       navigate("/");
     } catch (error) {
-      alert(error?.response?.data?.msg);
+      setError(error?.response?.data?.msg);
+      // alert(error?.response?.data?.msg);
       console.log(error.response.data);
+      setLoading(false);
     }
   }
   return (
     <>
-
       <div className="container my-5">
         <div className="d-flex flex-column align-items-center my-5">
           <h3 className="ask_title">Steps to write a good question</h3>
@@ -61,13 +68,12 @@ const AskQuestion = () => {
           onSubmit={handleSubmit}
         >
           <h3 className="ask_title">Ask a public question</h3>
-          <Link
-            to="/"
-            className="goto "
-          >
+          <Link to="/" className="goto ">
             Go to Question page
           </Link>
-
+          {error && (
+            <small style={{ paddingTop: "5px", color: "red" }}>{error}</small>
+          )}
           <input
             type="text"
             name="title"
@@ -88,7 +94,16 @@ const AskQuestion = () => {
             className="question-title"
             placeholder="Enter tag.."
           /> */}
-          <button className="ask-question-btn">Post Your Question</button>
+          <button className="ask-question-btn">
+            {loading ? (
+              <div className="loading">
+                <ClipLoader color="gray" size={25} />
+                <p>Please Wait ...</p>
+              </div>
+            ) : (
+              "Post Your Question"
+            )}
+          </button>
         </form>
       </div>
     </>
