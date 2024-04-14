@@ -19,9 +19,9 @@ const SingleQuestion = () => {
   const { user } = useContext(AppState);
   const [isLoading, setisLoading] = useState("");
   const answerDom = useRef();
-  console.log(isLoading)
+  console.log(isLoading);
   const getQuestionById = async () => {
-   setisLoading(true);
+    setisLoading(true);
     try {
       const question = await axios.get(
         `/questions/singlequestion/${params.id}`,
@@ -52,7 +52,7 @@ const SingleQuestion = () => {
           },
         }
       );
-      console.log(answerResponse)
+      console.log(answerResponse);
       setAnswers(answerResponse?.data?.answers);
     } catch (error) {
       alert(error?.response?.data?.msg);
@@ -91,14 +91,14 @@ const SingleQuestion = () => {
         }
       );
       // alert("answer added successful.");
-      // setLoading(false);
+      setLoading(false);
       answerDom.current.value = "";
-      // answerQuestion();
+      answerQuestion();
     } catch (error) {
       setError(error?.response?.data?.msg);
       // alert(error?.response?.data?.msg);
       console.log(error.response.data);
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
